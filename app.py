@@ -73,14 +73,6 @@ if df is not None:
                                         'Alone_to_Social_Ratio', 'Social_Comfort_Index', 
                                         'Social_Overload', 'Time_spent_Alone_Binned_Medium', 
                                         'Time_spent_Alone_Binned_High'] + list(poly_feature_names)
-    if model is not None and hasattr(model, 'coef_'):
-        expected_features = model.coef_[0].shape[0]
-        if len(feature_columns) > expected_features:
-            feature_columns = feature_columns[:expected_features]
-            st.warning(f"Adjusted feature_columns to {expected_features} features to match model expectations.")
-        elif len(feature_columns) < expected_features:
-            feature_columns += [f'Placeholder_{i}' for i in range(expected_features - len(feature_columns))]
-            st.warning(f"Padded feature_columns to {expected_features} features with placeholders to match model expectations.")
     scaler.fit(df_temp[feature_columns])
 else:
     # Fallback if dataset is unavailable
